@@ -12,7 +12,7 @@ import {
     SafeAreaView
 } from 'react-native';
 
-import { ListItem, SearchBar } from 'react-native-elements';
+import {ListItem, SearchBar} from 'react-native-elements';
 
 class FlatListDemo extends React.Component {
     constructor(props) {
@@ -27,27 +27,25 @@ class FlatListDemo extends React.Component {
         this.arrayholder = [];
     }
 
-    componentDidMount() {
-        this.makeRemoteRequest();
-    }
 
-    makeRemoteRequest = () => {
+    async makeRemoteRequest (searchTerm)  {
         //const url = `https://randomuser.me/api/?&results=20`;
-        const url = 'http://www.omdbapi.com/?apikey=28f4dae9';
-        this.setState({ loading: true });
+        const url = 'http://www.omdbapi.com/?apikey=28f4dae9&s=' + searchTerm;
+        this.setState({loading: true});
 
+        console.log("fetching api from: " + 'http://www.omdbapi.com/?apikey=28f4dae9&s=' + searchTerm)
         fetch(url)
             .then(res => res.json())
             .then(res => {
                 this.setState({
-                    data: res.results,
+                    data: res.Search,
                     error: res.error || null,
                     loading: false,
                 });
-                this.arrayholder = res.results;
+                this.arrayholder = res.Search;
             })
             .catch(error => {
-                this.setState({ error, loading: false });
+                this.setState({error, loading: false});
             });
     };
 
@@ -65,19 +63,24 @@ class FlatListDemo extends React.Component {
     };
 
     searchFilterFunction = text => {
+
+
         this.setState({
             value: text,
         });
 
-        const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.name.title.toUpperCase()} ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
-            const textData = text.toUpperCase();
+        this.makeRemoteRequest(text)
 
-            return itemData.indexOf(textData) > -1;
-        });
-        this.setState({
-            data: newData,
-        });
+        // const newData = this.arrayholder.filter(item => {
+        //     const itemData = `${item.name.title.toUpperCase()} ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
+        //     const textData = text.toUpperCase();
+        //
+        //     return itemData.indexOf(textData) > -1;
+        // });
+        //
+        // this.setState({
+        //     data: newData,
+        // });
     };
 
     renderHeader = () => {
@@ -96,20 +99,20 @@ class FlatListDemo extends React.Component {
     render() {
         if (this.state.loading) {
             return (
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <ActivityIndicator />
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <ActivityIndicator/>
                 </View>
             );
         }
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{flex: 1}}>
                 <FlatList
                     data={this.state.data}
-                    renderItem={({ item }) => (
+                    renderItem={({item}) => (
                         <ListItem
-                            leftAvatar={{ source: { uri: item.picture.thumbnail } }}
-                            title={`${item.name.first} ${item.name.last}`}
-                            subtitle={item.email}
+                            //leftAvatar={{source: {uri: item.Poster}}}
+                            title={item.Title}
+                            subtitle={item.Year}
                         />
                     )}
                     keyExtractor={item => item.email}
@@ -124,8 +127,8 @@ class FlatListDemo extends React.Component {
 
 export default function SearchScreen() {
     return (
-        <View style={{ flex: 1, backgroundColor: '#fff' }}>
-            <FlatListDemo />
+        <View style={{flex: 1, backgroundColor: '#fff'}}>
+            <FlatListDemo/>
         </View>
     );
 }
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
         ...Platform.select({
             ios: {
                 shadowColor: 'black',
-                shadowOffset: { width: 0, height: -3 },
+                shadowOffset: {width: 0, height: -3},
                 shadowOpacity: 0.1,
                 shadowRadius: 3,
             },
