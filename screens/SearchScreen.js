@@ -1,18 +1,10 @@
-import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import {
-    Image,
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    FlatList,
-    ActivityIndicator,
-    SafeAreaView
-} from 'react-native';
+import {ActivityIndicator, FlatList, Platform, StyleSheet, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 
 import {ListItem, SearchBar} from 'react-native-elements';
+import {createStackNavigator} from "@react-navigation/stack";
+import MovieDetailScreen from "./MovieDetailScreen";
 
 class FlatListDemo extends React.Component {
     constructor(props) {
@@ -42,11 +34,12 @@ class FlatListDemo extends React.Component {
                     error: res.error || null,
                     loading: false,
                 });
-                this.arrayholder = res.Search;
             })
             .catch(error => {
                 this.setState({error, loading: false});
             });
+
+
     };
 
     renderSeparator = () => {
@@ -62,7 +55,7 @@ class FlatListDemo extends React.Component {
         );
     };
 
-    searchFilterFunction = text => {
+    searchFilterFunction = async(text) => {
 
 
         this.setState({
@@ -96,26 +89,26 @@ class FlatListDemo extends React.Component {
         );
     };
 
+    handleTouchItem = (item) => {
+        this.props.navigation.navigate("MovieDetailScreen", item);
+    }
+
     render() {
-        if (this.state.loading) {
-            return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <ActivityIndicator/>
-                </View>
-            );
-        }
+
         return (
             <View style={{flex: 1}}>
                 <FlatList
                     data={this.state.data}
                     renderItem={({item}) => (
                         <ListItem
+                            onPress={() => this.handleTouchItem(item)}
                             //leftAvatar={{source: {uri: item.Poster}}}
                             title={item.Title}
                             subtitle={item.Year}
                         />
                     )}
-                    keyExtractor={item => item.email}
+
+                    keyExtractor={item => item.imdbID}
                     ItemSeparatorComponent={this.renderSeparator}
                     ListHeaderComponent={this.renderHeader}
                 />
@@ -126,11 +119,11 @@ class FlatListDemo extends React.Component {
 
 
 export default function SearchScreen() {
-    return (
-        <View style={{flex: 1, backgroundColor: '#fff'}}>
-            <FlatListDemo/>
-        </View>
-    );
+    return <View style={{flex: 1, backgroundColor: '#ffffff'}}>
+        <FlatListDemo/>
+    </View>
+
+
 }
 
 
