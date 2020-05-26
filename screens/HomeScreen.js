@@ -1,11 +1,11 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {Button, Image, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -47,7 +47,14 @@ export default function HomeScreen() {
         <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
           <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
         </View>
+
+        <Button
+            title="Go to Details"
+            onPress={() => navigation.navigate('Details',{itemId: 84})}
+        />
+
       </View>
+
     </View>
   );
 }
