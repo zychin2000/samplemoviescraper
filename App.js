@@ -7,6 +7,7 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 import MovieDetailScreen from "./screens/MovieDetailScreen";
+import SearchScreen from "./screens/SearchScreen";
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,8 @@ export default function App(props) {
         {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
         <NavigationContainer linking={LinkingConfiguration}>
           <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="imdb Movie Search" component={SearchScreen} />
+            {/*<Stack.Screen name="Root" component={BottomTabNavigator} />*/}
             <Stack.Screen name="Details" component={MovieDetailScreen} />
           </Stack.Navigator>
         </NavigationContainer>

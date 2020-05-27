@@ -50,7 +50,7 @@ export default function HomeScreen({navigation}) {
 
         <Button
             title="Go to Details"
-            onPress={() => navigation.navigate('Details',{itemId: 84})}
+            onPress={() => navigation.navigate('Details',{itemId: 'tt0848228'})}
         />
 
       </View>

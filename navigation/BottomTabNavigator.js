@@ -18,6 +18,14 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
 
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+        <BottomTab.Screen
+            name="Movies"
+            component={SearchScreen}
+            options={{
+                title: 'Movies',
+                tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+            }}
+        />
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
@@ -34,14 +42,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
         }}
       />
-      <BottomTab.Screen
-            name="Movies"
-            component={SearchScreen}
-            options={{
-                title: 'Movies',
-                tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
-            }}
-        />
+
     </BottomTab.Navigator>
   );
 }
@@ -55,7 +56,7 @@ function getHeaderTitle(route) {
     case 'Links':
       return 'Links to learn more';
       case 'Movies':
-          return 'Search for movies here';
+          return 'Movie Search';
 
   }
 }

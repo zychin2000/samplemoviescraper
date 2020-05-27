@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "samplemoviescraper",
-    "slug": "samplemoviescraper",
+    "slug": "zymoviescraper",
     "platforms": [
       "ios",
       "android",
@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "A simple movie scraper, by Joshua Chin Zheng Yao",
+    "githubUrl": "https://github.com/zychin2000/samplemoviescraper"
   }
 }

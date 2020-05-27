@@ -21,7 +21,6 @@ class FlatListDemo extends React.Component {
 
 
     async makeRemoteRequest (searchTerm)  {
-        //const url = `https://randomuser.me/api/?&results=20`;
         const url = 'http://www.omdbapi.com/?apikey=28f4dae9&s=' + searchTerm;
         this.setState({loading: true});
 
@@ -90,11 +89,10 @@ class FlatListDemo extends React.Component {
     };
 
     handleTouchItem = (item) => {
-        this.props.navigation.navigate("MovieDetailScreen", item);
+        this.props.navigation.navigate('Details',{itemId: item.imdbID});
     }
 
     render() {
-
         return (
             <View style={{flex: 1}}>
                 <FlatList
@@ -118,9 +116,10 @@ class FlatListDemo extends React.Component {
 }
 
 
-export default function SearchScreen() {
+export default function SearchScreen({navigation}) {
     return <View style={{flex: 1, backgroundColor: '#ffffff'}}>
-        <FlatListDemo/>
+        <FlatListDemo
+            navigation={navigation}/>
     </View>
 
 
